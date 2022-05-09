@@ -1,8 +1,8 @@
 import React, {useState, useEffect, createRef } from 'react';
-import './datePicker.css';
+import './datePicker.scss';
 
 
-export default function DatePicker ({onChange}) {
+export function DatePicker ({onChange}) {
     let oneDay = 60 * 60 * 24 * 1000;
     let todayTimestamp = Date.now() - (Date.now() % oneDay) + (new Date().getTimezoneOffset() * 1000 * 60);
     let date = new Date();

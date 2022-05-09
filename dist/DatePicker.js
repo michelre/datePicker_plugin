@@ -1,273 +1,332 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.default = DatePicker;
 
-require("core-js/modules/web.dom-collections.iterator.js");
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-require("core-js/modules/es.regexp.exec.js");
+exports.DatePicker = DatePicker;
 
-require("core-js/modules/es.string.split.js");
+var _react = require('react');
 
-require("core-js/modules/es.parse-int.js");
+var _react2 = _interopRequireDefault(_react);
 
-var _react = _interopRequireWildcard(require("react"));
+require('./datePicker.scss');
 
-require("./datePicker.css");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function DatePicker(_ref) {
-  let {
-    onChange
-  } = _ref;
-  let oneDay = 60 * 60 * 24 * 1000;
-  let todayTimestamp = Date.now() - Date.now() % oneDay + new Date().getTimezoneOffset() * 1000 * 60;
-  let date = new Date();
-  const inputRef = /*#__PURE__*/(0, _react.createRef)();
-  const [open, setOpen] = (0, _react.useState)(false);
-  const [selectedDay, setSelectedDay] = (0, _react.useState)('');
-  const [monthDetails, setMonthDetails] = (0, _react.useState)([]);
-  const [year, setNewYear] = (0, _react.useState)(date.getFullYear());
-  const [month, setNewMonth] = (0, _react.useState)(date.getMonth());
-  (0, _react.useEffect)(() => {
-    setMonthDetails(getMonthDetails(year, month));
-    setDateToInput(selectedDay);
-  }, []);
-  /**
-   *  Core
-   */
+    var onChange = _ref.onChange;
 
-  const daysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const monthMap = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var oneDay = 60 * 60 * 24 * 1000;
+    var todayTimestamp = Date.now() - Date.now() % oneDay + new Date().getTimezoneOffset() * 1000 * 60;
+    var date = new Date();
+    var inputRef = (0, _react.createRef)();
 
-  const getNumberOfDays = (year, month) => {
-    return 40 - new Date(year, month, 40).getDate();
-  };
+    var _useState = (0, _react.useState)(false),
+        _useState2 = _slicedToArray(_useState, 2),
+        open = _useState2[0],
+        setOpen = _useState2[1];
 
-  const getDayDetails = args => {
-    let date = args.index - args.firstDay;
-    let day = args.index % 7;
-    let prevMonth = args.month - 1;
-    let prevYear = args.year;
+    var _useState3 = (0, _react.useState)(''),
+        _useState4 = _slicedToArray(_useState3, 2),
+        selectedDay = _useState4[0],
+        setSelectedDay = _useState4[1];
 
-    if (prevMonth < 0) {
-      prevMonth = 11;
-      prevYear--;
-    }
+    var _useState5 = (0, _react.useState)([]),
+        _useState6 = _slicedToArray(_useState5, 2),
+        monthDetails = _useState6[0],
+        setMonthDetails = _useState6[1];
 
-    let prevMonthNumberOfDays = getNumberOfDays(prevYear, prevMonth);
+    var _useState7 = (0, _react.useState)(date.getFullYear()),
+        _useState8 = _slicedToArray(_useState7, 2),
+        year = _useState8[0],
+        setNewYear = _useState8[1];
 
-    let _date = (date < 0 ? prevMonthNumberOfDays + date : date % args.numberOfDays) + 1;
+    var _useState9 = (0, _react.useState)(date.getMonth()),
+        _useState10 = _slicedToArray(_useState9, 2),
+        month = _useState10[0],
+        setNewMonth = _useState10[1];
 
-    let month = date < 0 ? -1 : date >= args.numberOfDays ? 1 : 0;
-    let timestamp = new Date(args.year, args.month, _date).getTime();
-    return {
-      date: _date,
-      day,
-      month,
-      timestamp,
-      dayString: daysMap[day]
+    (0, _react.useEffect)(function () {
+        setMonthDetails(getMonthDetails(year, month));
+        setDateToInput(selectedDay);
+    }, []);
+
+    /**
+     *  Core
+     */
+
+    var daysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    var monthMap = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    var getNumberOfDays = function getNumberOfDays(year, month) {
+        return 40 - new Date(year, month, 40).getDate();
     };
-  };
 
-  const getMonthDetails = (year, month) => {
-    let firstDay = new Date(year, month).getDay();
-    let numberOfDays = getNumberOfDays(year, month);
-    let monthArray = [];
-    let rows = 6;
-    let currentDay = null;
-    let index = 0;
-    let cols = 7;
+    var getDayDetails = function getDayDetails(args) {
+        var date = args.index - args.firstDay;
+        var day = args.index % 7;
+        var prevMonth = args.month - 1;
+        var prevYear = args.year;
+        if (prevMonth < 0) {
+            prevMonth = 11;
+            prevYear--;
+        }
+        var prevMonthNumberOfDays = getNumberOfDays(prevYear, prevMonth);
+        var _date = (date < 0 ? prevMonthNumberOfDays + date : date % args.numberOfDays) + 1;
+        var month = date < 0 ? -1 : date >= args.numberOfDays ? 1 : 0;
+        var timestamp = new Date(args.year, args.month, _date).getTime();
+        return {
+            date: _date,
+            day: day,
+            month: month,
+            timestamp: timestamp,
+            dayString: daysMap[day]
+        };
+    };
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        currentDay = getDayDetails({
-          index,
-          numberOfDays,
-          firstDay,
-          year,
-          month
+    var getMonthDetails = function getMonthDetails(year, month) {
+        var firstDay = new Date(year, month).getDay();
+        var numberOfDays = getNumberOfDays(year, month);
+        var monthArray = [];
+        var rows = 6;
+        var currentDay = null;
+        var index = 0;
+        var cols = 7;
+        for (var row = 0; row < rows; row++) {
+            for (var col = 0; col < cols; col++) {
+                currentDay = getDayDetails({
+                    index: index,
+                    numberOfDays: numberOfDays,
+                    firstDay: firstDay,
+                    year: year,
+                    month: month
+                });
+                monthArray.push(currentDay);
+                index++;
+            }
+        }
+        return monthArray;
+    };
+
+    var isCurrentDay = function isCurrentDay(day) {
+        return day.timestamp === todayTimestamp;
+    };
+
+    var isSelectedDay = function isSelectedDay(day) {
+        return day.timestamp === selectedDay;
+    };
+
+    var getDateFromDateString = function getDateFromDateString(dateValue) {
+        var dateData = dateValue.split('-').map(function (d) {
+            return parseInt(d, 10);
         });
-        monthArray.push(currentDay);
-        index++;
-      }
-    }
-
-    return monthArray;
-  };
-
-  const isCurrentDay = day => {
-    return day.timestamp === todayTimestamp;
-  };
-
-  const isSelectedDay = day => {
-    return day.timestamp === selectedDay;
-  };
-
-  const getDateFromDateString = dateValue => {
-    let dateData = dateValue.split('-').map(d => parseInt(d, 10));
-    if (dateData.length < 3) return null;
-    let year = dateData[0];
-    let month = dateData[1];
-    let date = dateData[2];
-    return {
-      year,
-      month,
-      date
+        if (dateData.length < 3) return null;
+        var year = dateData[0];
+        var month = dateData[1];
+        var date = dateData[2];
+        return { year: year, month: month, date: date };
     };
-  };
 
-  const getMonthStr = month => {
-    return monthMap[Math.max(Math.min(11, month), 0)] || 'Month';
-  };
+    var getMonthStr = function getMonthStr(month) {
+        return monthMap[Math.max(Math.min(11, month), 0)] || 'Month';
+    };
 
-  const getDateStringFromTimestamp = timestamp => {
-    let dateObject = new Date(timestamp);
-    let month = dateObject.getMonth() + 1;
-    let date = dateObject.getDate();
-    return dateObject.getFullYear() + '-' + (month < 10 ? '0' + month : month) + '-' + (date < 10 ? '0' + date : date);
-  };
+    var getDateStringFromTimestamp = function getDateStringFromTimestamp(timestamp) {
+        var dateObject = new Date(timestamp);
+        var month = dateObject.getMonth() + 1;
+        var date = dateObject.getDate();
+        return dateObject.getFullYear() + '-' + (month < 10 ? '0' + month : month) + '-' + (date < 10 ? '0' + date : date);
+    };
 
-  const setDate = dateData => {
-    let selectedDay = new Date(dateData.year, dateData.month - 1, dateData.date).getTime();
-    setSelectedDay();
+    var setDate = function setDate(dateData) {
+        var selectedDay = new Date(dateData.year, dateData.month - 1, dateData.date).getTime();
+        setSelectedDay();
+        if (onChange) {
+            onChange(selectedDay);
+        }
+    };
 
-    if (onChange) {
-      onChange(selectedDay);
-    }
-  };
+    var updateDateFromInput = function updateDateFromInput() {
+        var dateValue = inputRef.current.value;
+        var dateData = getDateFromDateString(dateValue);
+        if (dateData !== null) {
+            setDate(dateData);
+            setNewYear(dateData.year);
+            setNewMonth(dateData.month - 1);
+            setMonthDetails(getMonthDetails(dateData.year, dateData.month - 1));
+        }
+    };
 
-  const updateDateFromInput = () => {
-    let dateValue = inputRef.current.value;
-    let dateData = getDateFromDateString(dateValue);
+    var setDateToInput = function setDateToInput(timestamp) {
+        var dateString = getDateStringFromTimestamp(timestamp);
+        inputRef.current.value = dateString;
+    };
 
-    if (dateData !== null) {
-      setDate(dateData);
-      setNewYear(dateData.year);
-      setNewMonth(dateData.month - 1);
-      setMonthDetails(getMonthDetails(dateData.year, dateData.month - 1));
-    }
-  };
+    var onDateClick = function onDateClick(day) {
+        setSelectedDay(day.timestamp);
+        setDateToInput(day.timestamp);
+        if (onChange) {
+            onChange(day.timestamp);
+        }
+    };
 
-  const setDateToInput = timestamp => {
-    let dateString = getDateStringFromTimestamp(timestamp);
-    inputRef.current.value = dateString;
-  };
+    var setYear = function setYear(offset) {
+        var yearState = year + offset;
+        var monthState = month;
+        setNewYear(yearState);
+        setMonthDetails(getMonthDetails(yearState, monthState));
+    };
 
-  const onDateClick = day => {
-    setSelectedDay(day.timestamp);
-    setDateToInput(day.timestamp);
+    var setMonth = function setMonth(offset) {
+        var yearState = year;
+        var monthState = month + offset;
+        if (month === -1) {
+            monthState = 11;
+            yearState--;
+        } else if (month === 12) {
+            monthState = 0;
+            yearState++;
+        }
+        setNewYear(yearState);
+        setNewMonth(monthState);
+        setMonthDetails(getMonthDetails(yearState, monthState));
+    };
 
-    if (onChange) {
-      onChange(day.timestamp);
-    }
-  };
+    /**
+     *  Renderers
+     */
 
-  const setYear = offset => {
-    let yearState = year + offset;
-    let monthState = month;
-    setNewYear(yearState);
-    setMonthDetails(getMonthDetails(yearState, monthState));
-  };
+    var renderCalendar = function renderCalendar() {
+        var days = monthDetails.map(function (day, index) {
+            return _react2.default.createElement(
+                'div',
+                { className: 'c-day-container ' + (day.month !== 0 ? ' disabled' : '') + (isCurrentDay(day) ? ' highlight' : '') + (isSelectedDay(day) ? ' highlight-blue' : ''), key: index },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'cdc-day' },
+                    _react2.default.createElement(
+                        'span',
+                        { onClick: function onClick() {
+                                return onDateClick(day);
+                            } },
+                        day.date
+                    )
+                )
+            );
+        });
 
-  const setMonth = offset => {
-    let yearState = year;
-    let monthState = month + offset;
+        return _react2.default.createElement(
+            'div',
+            { className: 'c-container' },
+            _react2.default.createElement(
+                'div',
+                { className: 'cc-head' },
+                ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(function (d, i) {
+                    return _react2.default.createElement(
+                        'div',
+                        { key: i, className: 'cch-name' },
+                        d
+                    );
+                })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'cc-body' },
+                days
+            )
+        );
+    };
 
-    if (month === -1) {
-      monthState = 11;
-      yearState--;
-    } else if (month === 12) {
-      monthState = 0;
-      yearState++;
-    }
-
-    setNewYear(yearState);
-    setNewMonth(monthState);
-    setMonthDetails(getMonthDetails(yearState, monthState));
-  };
-  /**
-   *  Renderers
-   */
-
-
-  const renderCalendar = () => {
-    let days = monthDetails.map((day, index) => {
-      return /*#__PURE__*/_react.default.createElement("div", {
-        className: 'c-day-container ' + (day.month !== 0 ? ' disabled' : '') + (isCurrentDay(day) ? ' highlight' : '') + (isSelectedDay(day) ? ' highlight-blue' : ''),
-        key: index
-      }, /*#__PURE__*/_react.default.createElement("div", {
-        className: "cdc-day"
-      }, /*#__PURE__*/_react.default.createElement("span", {
-        onClick: () => onDateClick(day)
-      }, day.date)));
-    });
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "c-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "cc-head"
-    }, ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((d, i) => /*#__PURE__*/_react.default.createElement("div", {
-      key: i,
-      className: "cch-name"
-    }, d))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "cc-body"
-    }, days));
-  };
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "datePicker-container"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dp-input",
-    onClick: () => setOpen(!open)
-  }, /*#__PURE__*/_react.default.createElement("input", {
-    type: "date",
-    ref: inputRef,
-    onChange: updateDateFromInput
-  })), open ? /*#__PURE__*/_react.default.createElement("div", {
-    className: "dp-container"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpc-head"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpch-button"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpchb-inner",
-    onClick: () => setYear(-1)
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    className: "dpchbi-left-arrows"
-  }))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpch-button"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpchb-inner",
-    onClick: () => setMonth(-1)
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    className: "dpchbi-left-arrow"
-  }))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpch-container"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpchc-year"
-  }, year), /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpchc-month"
-  }, getMonthStr(month))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpch-button"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpchb-inner",
-    onClick: () => setMonth(1)
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    className: "dpchbi-right-arrow"
-  }))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpch-button"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpchb-inner",
-    onClick: () => setYear(1)
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    className: "dpchbi-right-arrows"
-  })))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "dpc-body",
-    onClick: () => setOpen(!open)
-  }, renderCalendar())) : '');
+    return _react2.default.createElement(
+        'div',
+        { className: 'datePicker-container' },
+        _react2.default.createElement(
+            'div',
+            { className: 'dp-input', onClick: function onClick() {
+                    return setOpen(!open);
+                } },
+            _react2.default.createElement('input', {
+                type: 'date',
+                ref: inputRef,
+                onChange: updateDateFromInput
+            })
+        ),
+        open ? _react2.default.createElement(
+            'div',
+            { className: 'dp-container' },
+            _react2.default.createElement(
+                'div',
+                { className: 'dpc-head' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'dpch-button' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dpchb-inner', onClick: function onClick() {
+                                return setYear(-1);
+                            } },
+                        _react2.default.createElement('span', { className: 'dpchbi-left-arrows' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'dpch-button' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dpchb-inner', onClick: function onClick() {
+                                return setMonth(-1);
+                            } },
+                        _react2.default.createElement('span', { className: 'dpchbi-left-arrow' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'dpch-container' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dpchc-year' },
+                        year
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dpchc-month' },
+                        getMonthStr(month)
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'dpch-button' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dpchb-inner', onClick: function onClick() {
+                                return setMonth(1);
+                            } },
+                        _react2.default.createElement('span', { className: 'dpchbi-right-arrow' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'dpch-button' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dpchb-inner', onClick: function onClick() {
+                                return setYear(1);
+                            } },
+                        _react2.default.createElement('span', { className: 'dpchbi-right-arrows' })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'dpc-body', onClick: function onClick() {
+                        return setOpen(!open);
+                    } },
+                renderCalendar()
+            )
+        ) : ''
+    );
 }

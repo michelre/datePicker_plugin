@@ -1,6 +1,6 @@
 {
   "name": "datepickerplugin",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.4",
@@ -39,10 +39,23 @@
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10"
+    "@babel/preset-env": "^7.17.10",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": "/dist",
+  "babel": {
+    "presets": [
+      "react",
+      "env",
+      "stage-0"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Flower-dev/datePicker_plugin.git"
