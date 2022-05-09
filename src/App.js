@@ -1,4 +1,4 @@
-import DatePicker from './src/lib/index.js'
+import DatePicker from './lib/DatePicker.js'
 
 // ---------------------------------------------
 

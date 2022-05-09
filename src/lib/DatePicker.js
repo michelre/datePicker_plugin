@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createRef } from 'react';
-import './datePicker.scss';
+import './datePicker.css';
 
 
 export default function DatePicker ({onChange}) {
