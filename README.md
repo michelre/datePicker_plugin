@@ -33,8 +33,16 @@ export default function CreateEmployee() {
     )
 }
 ```
-## Local Development
 
+### Props
+
+| Prop name | Description | Default value | Default value |
+| :-------: |:-----------:| :------------:|:-------------:|
+| onChange  |   Function called when the user picks a valid date. | n/a | ```onChange={(value) => setDate(value)}``` |
+| disabled | Whether the date picker should be disabled | false | true |
+| required | Whether date input should be required | false | true |
+
+## Local Development
 The master branch contains the latest version of the Datepicker component.
 
 To begin local development:
