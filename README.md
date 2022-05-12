@@ -2,7 +2,8 @@
 
 A simple and reusable Datepicker component for React 
 
-![screen n°1](img/img1.png)
+<img src="img/img1.png" alt="datepicker" width="100"/>
+
 ## Installation
 The package can be installed via **npm**
 
@@ -22,7 +23,7 @@ yarn add datepickerplugin
 import { useState } from 'react';
 import {DatePicker}  from 'datepickerplugin';
 
-export default function CreateEmployee() {
+export default function Component() {
     const [ date, setDate ] = useState('');
 
     return (
@@ -36,7 +37,7 @@ export default function CreateEmployee() {
 
 ### Props
 
-| Prop name | Description | Default value | Default value |
+| Prop name | Description | Default value | Example values |
 | :-------: |:-----------:| :------------:|:-------------:|
 | onChange  |   Function called when the user picks a valid date. | n/a | ```onChange={(value) => setDate(value)}``` |
 | disabled | Whether the date picker should be disabled | false | true |
