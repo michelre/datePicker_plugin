@@ -2,7 +2,7 @@
 
 A simple and reusable Datepicker component for React 
 
-<img src="img/img1.png" alt="datepicker" width="100"/>
+<img src="img/img1.png" alt="datepicker" width="350"/>
 
 ## Installation
 The package can be installed via **npm**
